@@ -1,0 +1,24 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t jk-valentine/multi-docker-test -f ./client/Dockerfile.dev .
+
+script:
+  - docker run -e CI=true jk-valentine/multi-docker-test npm run test
+
+after_success:
+  - docker build -t jk-valentine/multi-client ./client
+  - docker build -t jk-valentine/multi-nginx  ./nginx
+  - docker build -t jk-valentine/multi-server ./server
+  - docker build -t jk-valentine/multi-worker ./worker
+
+# login to docker hub CLI
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# push images to docker hub
+- docker push jk-valentine/multi-client
+- docker push jk-valentine/multi-nginx
+- docker push jk-valentine/multi-server
+- docker push jk-valentine/multi-worker
