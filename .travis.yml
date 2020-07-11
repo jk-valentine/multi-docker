@@ -18,7 +18,7 @@ after_success:
 # login to docker hub CLI
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 # push images to docker hub
-- docker push jk-valentine/multi-client
-- docker push jk-valentine/multi-nginx
-- docker push jk-valentine/multi-server
-- docker push jk-valentine/multi-worker
+- docker push jkvalentine/multi-client
+- docker push jkvalentine/multi-nginx
+- docker push jkvalentine/multi-server
+- docker push jkvalentine/multi-worker
